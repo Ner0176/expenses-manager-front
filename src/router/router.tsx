@@ -1,11 +1,19 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { HistoryDashboard } from "../components";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { HistoryDashboard, SidebarLayout } from "../components";
 
 export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HistoryDashboard />} />
+        <Route
+          element={
+            <SidebarLayout>
+              <Outlet />
+            </SidebarLayout>
+          }
+        >
+          <Route path="/" element={<HistoryDashboard />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
