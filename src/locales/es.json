@@ -1,4 +1,11 @@
 {
+  "Sidebar": {
+    "Titles": {
+      "List": "Transacciones",
+      "Create": "Añadir transacción",
+      "Settings": "Ajustes"
+    }
+  },
   "Transaction": {
     "Title": "Detalle de transacción",
     "Import": "Importe",

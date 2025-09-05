@@ -1,5 +1,9 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { HistoryDashboard, SidebarLayout } from "../components";
+import {
+  CreateTransaction,
+  HistoryDashboard,
+  SidebarLayout,
+} from "../components";
 
 export const AppRouter = () => {
   return (
@@ -13,6 +17,7 @@ export const AppRouter = () => {
           }
         >
           <Route path="/" element={<HistoryDashboard />} />
+          <Route path="/new-transaction" element={<CreateTransaction />} />
         </Route>
       </Routes>
     </BrowserRouter>

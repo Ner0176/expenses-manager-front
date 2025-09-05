@@ -1,6 +1,6 @@
-import { Modal } from "../base";
+import { Modal } from "../../base";
 import { useSearchParams } from "react-router-dom";
-import { ITransaction } from "./transaction.interface";
+import { ITransaction } from "../transaction.interface";
 import { useTranslation } from "react-i18next";
 
 export const TransactionDetails = ({
