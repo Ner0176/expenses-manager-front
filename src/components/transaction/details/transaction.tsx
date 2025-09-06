@@ -17,16 +17,19 @@ export const TransactionDetails = ({
   };
 
   return (
-    <Modal title={t("Transaction.Title")} handleClose={handleCloseModal}>
+    <Modal
+      title={t("Transaction.Details.Title")}
+      handleClose={handleCloseModal}
+    >
       <div className="flex flex-col gap-2 border border-neutral-200 rounded-2xl py-2.5 px-4">
         <span className="text-lg font-semibold">{title}</span>
         <span className="text-neutral-500 text-sm">{description}</span>
         <div className="flex flex-row justify-between items-center">
-          <span>{t("Transaction.Import")}</span>
+          <span>{t("Transaction.Details.Import")}</span>
           <span>{amount}€</span>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <span>{t("Transaction.Category")}</span>
+          <span>{t("Transaction.Details.Category")}</span>
           <span>{category}</span>
         </div>
       </div>

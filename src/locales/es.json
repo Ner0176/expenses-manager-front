@@ -7,8 +7,22 @@
     }
   },
   "Transaction": {
-    "Title": "Detalle de transacción",
-    "Import": "Importe",
-    "Category": "Categoría"
+    "Create": {
+      "Title": "Título",
+      "Amount": "Importe",
+      "Currency": "Moneda",
+      "Category": {
+        "Title": "Categoría",
+        "Create": {
+          "Button": "Crear nueva"
+        }
+      },
+      "Description": "Descripción"
+    },
+    "Details": {
+      "Title": "Detalle de transacción",
+      "Import": "Importe",
+      "Category": "Categoría"
+    }
   }
 }

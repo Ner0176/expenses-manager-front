@@ -131,6 +131,10 @@ export const HistoryDashboard = () => {
             ]}
           />
         </div>
+        <div className="flex flex-col items-center gap-1">
+          <span className="font-bold text-3xl">1100€</span>
+          <span className="text-sm">Total gastado</span>
+        </div>
         <div className="flex flex-col gap-3 h-fit overflow-y-auto">
           {DATA.map(({ date, total, expenses }) => (
             <div key={date} className="flex flex-col gap-1 px-4 last:pb-3.5">
