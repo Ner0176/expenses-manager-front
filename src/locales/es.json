@@ -24,5 +24,15 @@
       "Import": "Importe",
       "Category": "Categoría"
     }
+  },
+  "Category": {
+    "Create": {
+      "Success": "La categoría ha sido creada correctamente",
+      "Error": "Ha ocurrido un error al intentar crear la categoría"
+    },
+    "Delete": {
+      "Success": "La categoría ha sido eliminada correctamente",
+      "Error": "Ha ocurrido un error al intentar eliminar la categoría"
+    }
   }
 }
