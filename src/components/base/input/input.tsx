@@ -4,9 +4,11 @@ export const CustomInput = ({
   title,
   value,
   onChange,
+  placeholder,
   type = "text",
 }: Readonly<{
   title?: string;
+  placeholder?: string;
   value: string | number;
   type?: HTMLInputTypeAttribute;
   onChange: (value: string | number) => void;
@@ -17,6 +19,7 @@ export const CustomInput = ({
       <input
         type={type}
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         className="border border-neutral-200 rounded-xl focus:outline-none px-3 py-1.5 text-sm"
       />

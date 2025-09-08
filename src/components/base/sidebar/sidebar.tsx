@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import {
   mdiCogOutline,
   mdiFormatListBulleted,
+  mdiLabelMultipleOutline,
   mdiPlusCircleOutline,
 } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -10,7 +11,8 @@ import { TITLES_MAP } from "./sidebar.interface";
 import { useTranslation } from "react-i18next";
 
 const SIDEBAR_OPTIONS = [
-  { icon: mdiCogOutline, path: "/" },
+  { icon: mdiCogOutline, path: "/settings" },
+  { icon: mdiLabelMultipleOutline, path: "/categories" },
   { icon: mdiPlusCircleOutline, path: "/new-transaction" },
   { icon: mdiFormatListBulleted, path: "/" },
 ];
@@ -27,13 +29,17 @@ export const SidebarLayout = ({
       <div className="flex flex-col justify-between w-full h-full bg-white">
         <div className="flex justify-center w-full border-b border-neutral-200 py-3">
           <span className="text-2xl font-bold">
-            {t(TITLES_MAP[location.pathname])}
+            {t(`Sidebar.Titles.${TITLES_MAP[location.pathname]}`)}
           </span>
         </div>
         <div className="flex-1 min-h-0">{children}</div>
         <div className="flex flex-row justify-evenly w-full border-t border-neutral-200 py-5">
           {SIDEBAR_OPTIONS.map(({ icon, path }) => (
-            <div className="cursor-pointer" onClick={() => navigate(path)}>
+            <div
+              key={path}
+              className="cursor-pointer"
+              onClick={() => navigate(path)}
+            >
               <Icon path={icon} className="size-6" />
             </div>
           ))}

@@ -13,28 +13,36 @@ export function useGetCategories() {
 
 export function useCreateCategory() {
   const { t } = useTranslation();
+  const basePath = "Settings.Category.Create";
 
   return useMutation({
     mutationFn: (payload: CreateCategoryPayload) => categoryApi.create(payload),
     onSuccess() {
-      showToast({ type: "success", text: t("Category.Delete.Success") });
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
     },
     onError() {
-      showToast({ type: "error", text: t("Category.Delete.Error") });
+      showToast({ type: "error", text: t(`${basePath}.Error`) });
     },
   });
 }
 
 export function useDeleteCategory() {
   const { t } = useTranslation();
+  const basePath = "Settings.Category.Delete";
 
   return useMutation({
     mutationFn: (id: number) => categoryApi.delete(id),
     onSuccess() {
-      showToast({ type: "success", text: t("Category.Delete.Success") });
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
     },
     onError() {
-      showToast({ type: "error", text: t("Category.Delete.Error") });
+      showToast({ type: "error", text: t(`${basePath}.Error`) });
     },
   });
 }

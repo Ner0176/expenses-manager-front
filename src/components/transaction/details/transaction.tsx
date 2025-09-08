@@ -18,8 +18,8 @@ export const TransactionDetails = ({
 
   return (
     <Modal
-      title={t("Transaction.Details.Title")}
       handleClose={handleCloseModal}
+      title={t("Transaction.Details.Title")}
     >
       <div className="flex flex-col gap-2 border border-neutral-200 rounded-2xl py-2.5 px-4">
         <span className="text-lg font-semibold">{title}</span>

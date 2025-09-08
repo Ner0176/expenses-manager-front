@@ -1,7 +1,11 @@
 {
+  "Generic": {
+    "Edit": "Editar"
+  },
   "Sidebar": {
     "Titles": {
       "List": "Transacciones",
+      "Categories": "Categorías",
       "Create": "Añadir transacción",
       "Settings": "Ajustes"
     }
@@ -25,14 +29,32 @@
       "Category": "Categoría"
     }
   },
-  "Category": {
-    "Create": {
-      "Success": "La categoría ha sido creada correctamente",
-      "Error": "Ha ocurrido un error al intentar crear la categoría"
+  "Settings": {
+    "Language": {
+      "Title": "Idioma",
+      "Options": {
+        "es": "Español"
+      }
     },
-    "Delete": {
-      "Success": "La categoría ha sido eliminada correctamente",
-      "Error": "Ha ocurrido un error al intentar eliminar la categoría"
+    "Category": {
+      "Default": {
+        "food": "Comida",
+        "health": "Salud",
+        "entertainment": "Ocio",
+        "transport": "Transporte",
+        "accomodation": "Alojamiento"
+      },
+      "Edit": {
+        "Title": "Editar categorías"
+      },
+      "Create": {
+        "Success": "La categoría ha sido creada correctamente",
+        "Error": "Ha ocurrido un error al intentar crear la categoría"
+      },
+      "Delete": {
+        "Success": "La categoría ha sido eliminada correctamente",
+        "Error": "Ha ocurrido un error al intentar eliminar la categoría"
+      }
     }
   }
 }
