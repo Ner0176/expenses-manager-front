@@ -1,46 +1,98 @@
 import { useState } from "react";
 import * as mdiIcons from "@mdi/js";
 import Icon from "@mdi/react";
-import { ICategory, useDeleteCategory } from "../../api";
+import { ICategory, useCreateCategory } from "../../api";
 import { ICON_MAP } from "./category.interface";
 import { useTranslation } from "react-i18next";
-import { mdiDelete, mdiPencil } from "@mdi/js";
+import { mdiChevronRight, mdiHelp } from "@mdi/js";
+import { CustomInput, Modal } from "../base";
+import { useSearchParams } from "react-router-dom";
 
 export const CategoryItem = ({
   category,
 }: Readonly<{ category: ICategory }>) => {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { id, tag, icon, isDefault } = category;
 
-  const { mutate: deleteCategory } = useDeleteCategory();
-
-  // const handleDeleteSuccess = (id: number) => {};
+  const handleShowDetails = () => {
+    searchParams.set("id", `${id}`);
+    setSearchParams(searchParams);
+  };
 
   return (
-    <div className="flex flex-row items-center justify-between border border-neutral-200 rounded-xl py-1.5 px-3 cursor-pointer hover:bg-neutral-50">
+    <div
+      onClick={handleShowDetails}
+      className="flex flex-row items-center justify-between first:border-t border-b border-neutral-200 py-3.5 px-7 cursor-pointer hover:bg-neutral-50"
+    >
       <div className="flex flex-row items-center gap-2">
         <Icon
           path={ICON_MAP[icon]}
           className="size-5 flex-shrink-0 text-neutral-500"
         />
         <span className="text-sm">
-          {isDefault ? t(`Settings.Category.Default.${tag}`) : tag}
+          {isDefault ? t(`Category.Default.${tag}`) : tag}
         </span>
       </div>
-      <div className="flex flex-row items-center gap-2">
-        <div onClick={() => {}}>
-          <Icon path={mdiPencil} className="size-5 text-neutral-500" />
-        </div>
-        <div onClick={() => deleteCategory(id)}>
-          <Icon path={mdiDelete} className="size-5 text-red-500" />
-        </div>
-      </div>
+      <Icon path={mdiChevronRight} className="size-5 text-neutral-400" />
     </div>
   );
 };
 
-export const IconPicker = ({
+export const CreateCategoryModal = ({
+  onClose,
+  refetch,
+}: Readonly<{ refetch(): void; onClose(): void }>) => {
+  const { t } = useTranslation();
+
+  const [tag, setTag] = useState("");
+  const [icon, setIcon] = useState<{ path: string; name: string }>();
+
+  const handleSuccess = () => {
+    onClose();
+    refetch();
+  };
+
+  const { mutate: create, isPending } = useCreateCategory(handleSuccess);
+
+  const handleSubmit = () => {
+    if (!!tag && !!icon) {
+      create({ icon: icon.name, tag });
+    }
+  };
+
+  return (
+    <Modal
+      isLoading={isPending}
+      handleClose={onClose}
+      handleSubmit={handleSubmit}
+      title={t("Category.Create.Title")}
+    >
+      <div className="flex flex-col gap-2 py-2.5 h-full">
+        <CustomInput
+          value={tag}
+          title={t("Category.Title")}
+          onChange={(value) => setTag(value as string)}
+          placeholder={t("Category.Create.Placeholder")}
+        />
+        <div className="flex flex-col items-center gap-3 w-full">
+          <div className="flex flex-col gap-1 w-full">
+            <span className="font-semibold text-xs">
+              {t("Category.Create.Icon")}
+            </span>
+            <div className="flex items-center justify-center border border-neutral-200 w-full rounded-2xl h-[80px]">
+              <Icon path={icon?.path ?? mdiHelp} className="size-8" />
+            </div>
+          </div>
+          <IconPicker onSelect={(path, name) => setIcon({ path, name })} />
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+const IconPicker = ({
   onSelect,
 }: Readonly<{
   onSelect: (iconPath: string, iconName: string) => void;
@@ -57,23 +109,20 @@ export const IconPicker = ({
   );
 
   return (
-    <div className="p-4">
-      <input
-        type="text"
-        placeholder="Buscar icono..."
-        className="border p-2 w-full mb-4 rounded"
+    <div className="flex flex-col gap-5 w-full">
+      <CustomInput
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Buscar icono..."
+        onChange={(value) => setSearch(value as string)}
       />
-      <div className="grid grid-cols-2 gap-4 max-h-[400px] overflow-y-auto">
+      <div className="grid grid-cols-5 gap-4 flex-1 max-h-[300px] overflow-y-auto">
         {filteredIcons.map((icon) => (
           <button
             key={icon.name}
-            className="flex flex-col items-center p-2 border rounded hover:bg-gray-100"
             onClick={() => onSelect(icon.path, icon.name)}
+            className="flex flex-col items-center p-2 border rounded hover:bg-gray-100"
           >
-            <Icon path={icon.path} size={1.5} />
-            <span className="text-[10px] mt-1 text-gray-600">{icon.name}</span>
+            <Icon path={icon.path} className="size-7" />
           </button>
         ))}
       </div>

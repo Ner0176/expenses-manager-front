@@ -11,13 +11,21 @@ export function useGetCategories() {
   });
 }
 
-export function useCreateCategory() {
+export function useGetCategory(id: number) {
+  return useQuery<ICategory>({
+    queryKey: ["getAllCategories", id],
+    queryFn: () => categoryApi.getOne(id),
+  });
+}
+
+export function useCreateCategory(handleSuccess: () => void) {
   const { t } = useTranslation();
-  const basePath = "Settings.Category.Create";
+  const basePath = "Category.Create";
 
   return useMutation({
     mutationFn: (payload: CreateCategoryPayload) => categoryApi.create(payload),
     onSuccess() {
+      handleSuccess();
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),
@@ -29,13 +37,14 @@ export function useCreateCategory() {
   });
 }
 
-export function useDeleteCategory() {
+export function useDeleteCategory(handleDelete: () => void) {
   const { t } = useTranslation();
-  const basePath = "Settings.Category.Delete";
+  const basePath = "Category.Delete";
 
   return useMutation({
     mutationFn: (id: number) => categoryApi.delete(id),
     onSuccess() {
+      handleDelete();
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),

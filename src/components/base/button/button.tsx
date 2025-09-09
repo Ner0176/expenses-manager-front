@@ -1,13 +1,35 @@
+import Icon from "@mdi/react";
+import { CustomButtonContainer } from "./button.styled";
+import { LoadingSpinner } from "../loading-spinner";
+
 export const CustomButton = ({
   text,
+  icon,
   onClick,
-}: Readonly<{ text: string; onClick(): void }>) => {
+  isLoading = false,
+  buttonType = "default",
+}: Readonly<{
+  text: string;
+  icon?: string;
+  onClick(): void;
+  isLoading?: boolean;
+  buttonType?: "default" | "cancel";
+}>) => {
   return (
-    <button
-      onClick={onClick}
-      className="bg-emerald-400 rounded-full text-sm shadow-sm px-4 py-2 text-white cursor-pointer hover:shadow-xl whitespace-nowrap"
+    <CustomButtonContainer
+      buttonType={buttonType}
+      onClick={() => {
+        if (!isLoading) onClick();
+      }}
     >
-      {text}
-    </button>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {!!icon && <Icon path={icon} className="size-4 mt-0.5" />}
+          {text}
+        </>
+      )}
+    </CustomButtonContainer>
   );
 };

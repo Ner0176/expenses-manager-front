@@ -1,6 +1,10 @@
 {
   "Generic": {
-    "Edit": "Editar"
+    "Edit": "Editar",
+    "Create": "Crear",
+    "Delete": "Eliminar",
+    "Cancel": "Cancelar",
+    "SaveChanges": "Guardar cambios"
   },
   "Sidebar": {
     "Titles": {
@@ -29,31 +33,36 @@
       "Category": "Categoría"
     }
   },
+  "Category": {
+    "Title": "Categoría",
+    "Search": "Buscar categoría...",
+    "Default": {
+      "food": "Comida",
+      "health": "Salud",
+      "entertainment": "Ocio",
+      "transport": "Transporte",
+      "accomodation": "Alojamiento"
+    },
+    "Edit": {
+      "Title": "Editar categorías"
+    },
+    "Create": {
+      "Icon": "Icono",
+      "Title": "Crear categoría",
+      "Placeholder": "Introduce el nombre....",
+      "Success": "La categoría ha sido creada correctamente",
+      "Error": "Ha ocurrido un error al intentar crear la categoría"
+    },
+    "Delete": {
+      "Success": "La categoría ha sido eliminada correctamente",
+      "Error": "Ha ocurrido un error al intentar eliminar la categoría"
+    }
+  },
   "Settings": {
     "Language": {
       "Title": "Idioma",
       "Options": {
         "es": "Español"
-      }
-    },
-    "Category": {
-      "Default": {
-        "food": "Comida",
-        "health": "Salud",
-        "entertainment": "Ocio",
-        "transport": "Transporte",
-        "accomodation": "Alojamiento"
-      },
-      "Edit": {
-        "Title": "Editar categorías"
-      },
-      "Create": {
-        "Success": "La categoría ha sido creada correctamente",
-        "Error": "Ha ocurrido un error al intentar crear la categoría"
-      },
-      "Delete": {
-        "Success": "La categoría ha sido eliminada correctamente",
-        "Error": "Ha ocurrido un error al intentar eliminar la categoría"
       }
     }
   }

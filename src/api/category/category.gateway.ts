@@ -6,6 +6,10 @@ export const categoryApi = {
     const response = await axiosInstance.get("/category");
     return response.data;
   },
+  getOne: async (id: number) => {
+    const response = await axiosInstance.get(`/category/${id}`);
+    return response.data;
+  },
   create: async (payload: CreateCategoryPayload) => {
     await axiosInstance.post("/category", payload);
   },
