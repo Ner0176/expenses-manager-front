@@ -25,12 +25,18 @@
           "Button": "Crear nueva"
         }
       },
-      "Description": "Descripción"
+      "Description": "Descripción",
+      "Success": "La transacción ha sido creada correctamente",
+      "Error": "Ha ocurrido un error al intentar crear la transacción"
     },
     "Details": {
       "Title": "Detalle de transacción",
       "Import": "Importe",
       "Category": "Categoría"
+    },
+    "Delete": {
+      "Success": "La transacción ha sido eliminada correctamente",
+      "Error": "Ha ocurrido un error al intentar eliminar la transacción"
     }
   },
   "Category": {

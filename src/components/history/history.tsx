@@ -1,7 +1,8 @@
-import { useSearchParams } from "react-router-dom";
-import { CustomSelect } from "../base";
 import { useState } from "react";
-import { ITransaction, TransactionDetails } from "../transaction";
+import { CustomSelect } from "../base";
+import { ITransaction } from "../../api";
+import { useSearchParams } from "react-router-dom";
+import { TransactionDetails } from "../transaction";
 
 const DATA = [
   {
