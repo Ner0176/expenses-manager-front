@@ -5,7 +5,7 @@ import {
 } from "./transaction.interface";
 
 export const transactionApi = {
-  findAll: async (payload: GetTransactionsPayload) => {
+  findAll: async (payload?: GetTransactionsPayload) => {
     const response = await axios.get("/transaction", { params: payload });
     return response.data;
   },

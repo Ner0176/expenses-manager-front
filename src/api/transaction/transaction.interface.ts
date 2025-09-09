@@ -21,5 +21,5 @@ export interface ITransaction {
 
 export interface ITransactionsList {
   total: number;
-  transactions: { total: number; transaction: ITransaction }[];
+  list: { total: number; transactions: ITransaction[] }[];
 }

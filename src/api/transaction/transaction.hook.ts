@@ -8,7 +8,7 @@ import { transactionApi } from "./transaction.gateway";
 import { showToast } from "../../components";
 import { useTranslation } from "react-i18next";
 
-export function useGetTransactions(payload: GetTransactionsPayload) {
+export function useGetTransactions(payload?: GetTransactionsPayload) {
   return useQuery<ITransactionsList>({
     queryKey: ["getTransactions", payload],
     queryFn: () => transactionApi.findAll(payload),
