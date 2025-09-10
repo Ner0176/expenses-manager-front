@@ -6,6 +6,7 @@ import Icon from "@mdi/react";
 import { mdiArrowRight } from "@mdi/js";
 import { useCreateTransaction, useGetCategories } from "../../../api";
 import { CURRENCIES } from "../transaction.interface";
+import { getCategoryTitle } from "../../category";
 
 export const CreateTransaction = ({
   handleClose,
@@ -56,9 +57,9 @@ export const CreateTransaction = ({
             title={t("Category.Title")}
             handleChange={(value) => setCategoryId(+value)}
             options={
-              categories?.map(({ id, tag, isDefault }) => ({
-                value: `${id}`,
-                text: isDefault ? t(`Category.Default.${tag}`) : tag,
+              categories?.map((category) => ({
+                value: `${category.id}`,
+                text: getCategoryTitle(t, category),
               })) ?? []
             }
           />

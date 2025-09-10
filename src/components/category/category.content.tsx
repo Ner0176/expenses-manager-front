@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { mdiChevronRight, mdiHelp } from "@mdi/js";
 import { CustomInput, Modal } from "../base";
 import { useSearchParams } from "react-router-dom";
+import { getCategoryTitle } from "./category.utils";
 
 export const CategoryItem = ({
   category,
@@ -14,7 +15,7 @@ export const CategoryItem = ({
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { id, tag, icon, isDefault } = category;
+  const { id, icon } = category;
 
   const handleShowDetails = () => {
     searchParams.set("id", `${id}`);
@@ -31,9 +32,7 @@ export const CategoryItem = ({
           path={ICON_MAP[icon]}
           className="size-5 flex-shrink-0 text-neutral-500"
         />
-        <span className="text-sm">
-          {isDefault ? t(`Category.Default.${tag}`) : tag}
-        </span>
+        <span className="text-sm">{getCategoryTitle(t, category)}</span>
       </div>
       <Icon path={mdiChevronRight} className="size-5 text-neutral-400" />
     </div>
