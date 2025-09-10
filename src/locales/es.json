@@ -13,6 +13,12 @@
       "Settings": "Ajustes"
     }
   },
+  "History": {
+    "Total": "Total gastado",
+    "AddTx": "Añadir gasto",
+    "Currency": "Moneda",
+    "Filters": "Filtros"
+  },
   "Transaction": {
     "Create": {
       "ModalTitle": "Añadir transacción",

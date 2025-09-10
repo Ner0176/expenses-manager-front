@@ -1,14 +1,18 @@
 import Icon from "@mdi/react";
 import { useState } from "react";
 import { format } from "date-fns";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateTransaction, TransactionDetails } from "../transaction";
 import { ITransaction, useGetTransactions } from "../../api";
 import { ICON_MAP } from "../category";
 import { mdiCurrencyUsd, mdiFilterVariant, mdiPlus } from "@mdi/js";
 import { ActionIcon } from "./history.content";
+import { useTranslation } from "react-i18next";
 
 export const HistoryDashboard = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const showCreateModal = searchParams.get("modal") === "create";
   const showTransaction = searchParams.get("modal") === "transaction";
@@ -17,19 +21,10 @@ export const HistoryDashboard = () => {
 
   const { data: transactions } = useGetTransactions();
 
-  const handleViewTx = (transaction: ITransaction) => {
-    searchParams.set("modal", "transaction");
-    setSearchParams(searchParams);
-    setCurrentTransaction(transaction);
-  };
-
-  const handleCreateTx = () => {
-    searchParams.set("modal", "create");
-    setSearchParams(searchParams);
-  };
-
-  const handleCloseModal = () => {
-    searchParams.delete("modal");
+  const handleModal = (isOpen: boolean, path?: string) => {
+    isOpen && path
+      ? searchParams.set("modal", path)
+      : searchParams.delete("modal");
     setSearchParams(searchParams);
   };
 
@@ -45,19 +40,19 @@ export const HistoryDashboard = () => {
           </div>
           <div className="flex flex-row items-center justify-center gap-5">
             <ActionIcon
-              text={"Moneda"}
-              onClick={() => {}}
               icon={mdiCurrencyUsd}
+              text={t("History.Currency")}
+              onClick={() => navigate("/settings")}
             />
             <ActionIcon
               icon={mdiPlus}
-              text={"Añadir gasto"}
-              onClick={handleCreateTx}
+              text={t("History.AddTx")}
+              onClick={() => handleModal(true, "create")}
             />
             <ActionIcon
-              text={"Filtros"}
               onClick={() => {}}
               icon={mdiFilterVariant}
+              text={t("History.Filters")}
             />
           </div>
         </div>
@@ -77,7 +72,10 @@ export const HistoryDashboard = () => {
                     return (
                       <div
                         className="flex flex-row items-center gap-3 hover:bg-neutral-50 px-4 py-2 cursor-pointer"
-                        onClick={() => handleViewTx(transaction)}
+                        onClick={() => {
+                          handleModal(true, "transaction");
+                          setCurrentTransaction(transaction);
+                        }}
                       >
                         <div className="rounded-full border border-neutral-200 p-2">
                           <Icon
@@ -104,12 +102,12 @@ export const HistoryDashboard = () => {
         </div>
       </div>
       {!!showCreateModal && (
-        <CreateTransaction handleClose={handleCloseModal} />
+        <CreateTransaction handleClose={() => handleModal(false)} />
       )}
       {!!showTransaction && !!currentTransaction && (
         <TransactionDetails
-          handleClose={handleCloseModal}
           transaction={currentTransaction}
+          handleClose={() => handleModal(false)}
         />
       )}
     </>
