@@ -1,18 +1,20 @@
-import axios from "axios";
 import {
   GetTransactionsPayload,
   CreateTransactionPayload,
 } from "./transaction.interface";
+import { axiosInstance } from "../axios-instance";
 
 export const transactionApi = {
   findAll: async (payload?: GetTransactionsPayload) => {
-    const response = await axios.get("/transaction", { params: payload });
+    const response = await axiosInstance.get("/transaction", {
+      params: payload,
+    });
     return response.data;
   },
   create: async (payload: CreateTransactionPayload) => {
-    await axios.post("/transaction", payload);
+    await axiosInstance.post("/transaction/create", payload);
   },
   delete: async (id: number) => {
-    await axios.delete(`/transaction/${id}`);
+    await axiosInstance.delete(`/transaction/${id}`);
   },
 };

@@ -10,15 +10,17 @@
     "Titles": {
       "List": "Transacciones",
       "Categories": "Categorías",
-      "Create": "Añadir transacción",
       "Settings": "Ajustes"
     }
   },
   "Transaction": {
     "Create": {
+      "ModalTitle": "Añadir transacción",
       "Title": "Título",
       "Amount": "Importe",
       "Currency": "Moneda",
+      "From": "De",
+      "To": "A",
       "Category": {
         "Title": "Categoría",
         "Create": {

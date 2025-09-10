@@ -1,7 +1,6 @@
 import {
   SidebarLayout,
   HistoryDashboard,
-  CreateTransaction,
   CategoryDashboard,
 } from "../components";
 import { SettingsDashboard } from "../components/settings";
@@ -21,7 +20,6 @@ export const AppRouter = () => {
           <Route path="/" element={<HistoryDashboard />} />
           <Route path="/settings" element={<SettingsDashboard />} />
           <Route path="/categories" element={<CategoryDashboard />} />
-          <Route path="/new-transaction" element={<CreateTransaction />} />
         </Route>
       </Routes>
     </BrowserRouter>

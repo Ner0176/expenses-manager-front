@@ -4,7 +4,6 @@ import {
   mdiCogOutline,
   mdiFormatListBulleted,
   mdiLabelMultipleOutline,
-  mdiPlusCircleOutline,
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,9 +12,8 @@ import { useTranslation } from "react-i18next";
 
 const SIDEBAR_OPTIONS = [
   { icon: mdiCogOutline, path: "/settings" },
-  { icon: mdiLabelMultipleOutline, path: "/categories" },
-  { icon: mdiPlusCircleOutline, path: "/new-transaction" },
   { icon: mdiFormatListBulleted, path: "/" },
+  { icon: mdiLabelMultipleOutline, path: "/categories" },
 ];
 
 export const SidebarLayout = ({

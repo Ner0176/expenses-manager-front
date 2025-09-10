@@ -1,26 +1,17 @@
 import { Modal } from "../../base";
 import { ITransaction } from "../../../api";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
 
 export const TransactionDetails = ({
   transaction,
-}: Readonly<{ transaction: ITransaction }>) => {
+  handleClose,
+}: Readonly<{ transaction: ITransaction; handleClose(): void }>) => {
   const { t } = useTranslation();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { title, amount, category, description } = transaction;
 
-  const handleCloseModal = () => {
-    searchParams.delete("modal");
-    setSearchParams(searchParams);
-  };
-
   return (
-    <Modal
-      handleClose={handleCloseModal}
-      title={t("Transaction.Details.Title")}
-    >
+    <Modal handleClose={handleClose} title={t("Transaction.Details.Title")}>
       <div className="flex flex-col gap-2 border border-neutral-200 rounded-2xl py-2.5 px-4">
         <span className="text-lg font-semibold">{title}</span>
         <span className="text-neutral-500 text-sm">{description}</span>
@@ -30,7 +21,7 @@ export const TransactionDetails = ({
         </div>
         <div className="flex flex-row justify-between items-center">
           <span>{t("Transaction.Details.Category")}</span>
-          <span>{category}</span>
+          <span>{category.tag}</span>
         </div>
       </div>
     </Modal>

@@ -1,38 +1,65 @@
+import Icon from "@mdi/react";
 import { useState } from "react";
-import { CustomSelect } from "../base";
-import { ITransaction, useGetTransactions } from "../../api";
-import { useSearchParams } from "react-router-dom";
-import { TransactionDetails } from "../transaction";
 import { format } from "date-fns";
+import { useSearchParams } from "react-router-dom";
+import { CreateTransaction, TransactionDetails } from "../transaction";
+import { ITransaction, useGetTransactions } from "../../api";
+import { ICON_MAP } from "../category";
+import { mdiCurrencyUsd, mdiFilterVariant, mdiPlus } from "@mdi/js";
+import { ActionIcon } from "./history.content";
 
 export const HistoryDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const showCreateModal = searchParams.get("modal") === "create";
   const showTransaction = searchParams.get("modal") === "transaction";
 
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
   const { data: transactions } = useGetTransactions();
 
-  const handleViewTransaction = (transaction: ITransaction) => {
+  const handleViewTx = (transaction: ITransaction) => {
     searchParams.set("modal", "transaction");
     setSearchParams(searchParams);
     setCurrentTransaction(transaction);
   };
 
+  const handleCreateTx = () => {
+    searchParams.set("modal", "create");
+    setSearchParams(searchParams);
+  };
+
+  const handleCloseModal = () => {
+    searchParams.delete("modal");
+    setSearchParams(searchParams);
+  };
+
   return (
     <>
       <div className="flex flex-col gap-5 size-full pt-3.5">
-        <div className="flex flex-row w-full justify-end gap-3 px-4">
-          <CustomSelect
-            options={[
-              { text: "Hola", value: "Hola" },
-              { text: "Adéu", value: "Xao" },
-            ]}
-          />
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <span className="font-bold text-3xl">1100€</span>
-          <span className="text-sm">Total gastado</span>
+        <div className="flex flex-col items-center gap-5">
+          <div className="flex flex-col items-center gap-1">
+            <span className="font-bold text-3xl">
+              {transactions?.totalGeneral}€
+            </span>
+            <span className="text-sm">Total gastado</span>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-5">
+            <ActionIcon
+              text={"Moneda"}
+              onClick={() => {}}
+              icon={mdiCurrencyUsd}
+            />
+            <ActionIcon
+              icon={mdiPlus}
+              text={"Añadir gasto"}
+              onClick={handleCreateTx}
+            />
+            <ActionIcon
+              text={"Filtros"}
+              onClick={() => {}}
+              icon={mdiFilterVariant}
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-3 h-fit overflow-y-auto">
           {transactions?.list.map(({ total, transactions }) => {
@@ -45,13 +72,19 @@ export const HistoryDashboard = () => {
                 </div>
                 <div className="flex flex-col rounded-2xl border border-neutral-200 w-full overflow-hidden">
                   {transactions.map((transaction) => {
-                    const { title, amount, description } = transaction;
+                    const { title, amount, description, category } =
+                      transaction;
                     return (
                       <div
                         className="flex flex-row items-center gap-3 hover:bg-neutral-50 px-4 py-2 cursor-pointer"
-                        onClick={() => handleViewTransaction(transaction)}
+                        onClick={() => handleViewTx(transaction)}
                       >
-                        <div className="rounded-full border border-neutral-200 p-3" />
+                        <div className="rounded-full border border-neutral-200 p-2">
+                          <Icon
+                            path={ICON_MAP[category.icon]}
+                            className="size-5 text-neutral-400"
+                          />
+                        </div>
                         <div className="flex flex-row justify-between items-center w-full">
                           <div className="flex flex-col gap-0.5">
                             <span className="text-sm">{title}</span>
@@ -70,8 +103,14 @@ export const HistoryDashboard = () => {
           })}
         </div>
       </div>
+      {!!showCreateModal && (
+        <CreateTransaction handleClose={handleCloseModal} />
+      )}
       {!!showTransaction && !!currentTransaction && (
-        <TransactionDetails transaction={currentTransaction} />
+        <TransactionDetails
+          handleClose={handleCloseModal}
+          transaction={currentTransaction}
+        />
       )}
     </>
   );

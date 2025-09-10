@@ -1,5 +1,6 @@
+import { ICategory } from "../category";
+
 export interface CreateTransactionPayload {
-  date: Date;
   title: string;
   amount: number;
   currency: string;
@@ -15,11 +16,11 @@ export interface ITransaction {
   date: Date;
   title: string;
   amount: number;
-  category: string;
+  category: ICategory;
   description: string;
 }
 
 export interface ITransactionsList {
-  total: number;
+  totalGeneral: number;
   list: { total: number; transactions: ITransaction[] }[];
 }
