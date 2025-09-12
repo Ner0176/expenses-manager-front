@@ -20,7 +20,12 @@ export const TransactionDetails = ({
 
   const { id, title, amount, category, description, date } = transaction;
 
-  const { mutate: deleteTx, isPending } = useDeleteTransaction(refetch);
+  const handleSuccess = () => {
+    refetch();
+    handleClose();
+  };
+
+  const { mutate: deleteTx, isPending } = useDeleteTransaction(handleSuccess);
 
   return (
     <Modal handleClose={handleClose} title={t("Transaction.Details.Title")}>

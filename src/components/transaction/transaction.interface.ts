@@ -1,6 +1,6 @@
-export const CURRENCIES = [
-  "EUR (€)",
-  "JPY (¥)",
-  "KRW (₩)",
-  "Bat tailandés (฿)",
-];
+export const CURRENCIES = {
+  EUR: "EUR (€)",
+  JPY: "JPY (¥)",
+  KRW: "KRW (₩)",
+  THB: "Bat tailandés (฿)",
+};

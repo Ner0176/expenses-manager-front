@@ -15,7 +15,7 @@ export function useGetTransactions(payload?: GetTransactionsPayload) {
   });
 }
 
-export function useCreateTransaction() {
+export function useCreateTransaction(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "Transaction.Create";
 
@@ -23,6 +23,7 @@ export function useCreateTransaction() {
     mutationFn: (payload: CreateTransactionPayload) =>
       transactionApi.create(payload),
     onSuccess() {
+      handleSuccess();
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),

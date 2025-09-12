@@ -17,7 +17,8 @@
     "Total": "Total gastado",
     "AddTx": "Añadir gasto",
     "Currency": "Moneda",
-    "Filters": "Filtros"
+    "Filters": "Filtros",
+    "Empty": "Aún no hay transacciones"
   },
   "Transaction": {
     "Create": {
@@ -34,6 +35,7 @@
         }
       },
       "Description": "Descripción",
+      "EmptyFields": "Debes rellenar todos los campos",
       "Success": "La transacción ha sido creada correctamente",
       "Error": "Ha ocurrido un error al intentar crear la transacción"
     },

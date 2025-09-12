@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CustomInput, CustomSelect, Modal } from "../../base";
+import { CustomInput, CustomSelect, Modal, showToast } from "../../base";
 import { useTranslation } from "react-i18next";
 import { CustomTextArea } from "../../base/text-area";
 import Icon from "@mdi/react";
@@ -9,8 +9,9 @@ import { CURRENCIES } from "../transaction.interface";
 import { getCategoryTitle } from "../../category";
 
 export const CreateTransaction = ({
+  refetch,
   handleClose,
-}: Readonly<{ handleClose(): void }>) => {
+}: Readonly<{ refetch(): void; handleClose(): void }>) => {
   const { t } = useTranslation();
 
   const [title, setTitle] = useState("");
@@ -19,17 +20,29 @@ export const CreateTransaction = ({
   const [categoryId, setCategoryId] = useState(-1);
   const [description, setDescription] = useState("");
 
+  const handleSuccess = () => {
+    refetch();
+    handleClose();
+  };
+
   const { data: categories } = useGetCategories();
-  const { mutate: createTransaction } = useCreateTransaction();
+  const { mutate: createTransaction } = useCreateTransaction(handleSuccess);
 
   useEffect(() => {
     if (categories) {
-      setCurrency(CURRENCIES[0]);
+      setCurrency("EUR");
       setCategoryId(categories[0].id);
     }
   }, [categories]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!title || !currency || !categoryId || !amount) {
+      return showToast({
+        type: "error",
+        text: t("Transaction.Create.EmptyFields"),
+      });
+    }
+
     createTransaction({
       title,
       currency,
@@ -70,7 +83,10 @@ export const CreateTransaction = ({
             customStyles={{ width: "100%" }}
             title={t("Transaction.Create.From")}
             handleChange={(value) => setCurrency(value)}
-            options={CURRENCIES.map((curr) => ({ text: curr, value: curr }))}
+            options={Object.entries(CURRENCIES).map(([key, value]) => ({
+              text: value,
+              value: key,
+            }))}
           />
           <Icon
             path={mdiArrowRight}
