@@ -5,7 +5,7 @@ import { ITransaction, useGetCategories } from "../../api";
 import { CustomDatePicker, CustomSelect, Modal, showToast } from "../base";
 import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TIME_FILTERS } from "./history.interface";
 import { getDatesFromTimeFilter } from "./history.utils";
 import { format, isAfter } from "date-fns";
@@ -57,18 +57,28 @@ export const HistoryTransaction = ({
 
 export const HistoryFiltersModal = ({
   handleClose,
+  selectedTime,
+  selectedCategoryId,
 }: Readonly<{
   handleClose(): void;
+  selectedTime?: string;
+  selectedCategoryId?: string;
 }>) => {
   const { t } = useTranslation();
   const [_, setSearchParams] = useSearchParams();
 
-  const [time, setTime] = useState("-");
+  const [time, setTime] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [category, setCategory] = useState("-");
+  const [category, setCategory] = useState("");
   const [startDate, setStartDate] = useState("");
 
   const { data: categories, isLoading } = useGetCategories();
+
+  useEffect(() => {
+    setTime(selectedTime ?? "-");
+    setCategory(selectedCategoryId ?? "-");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getCategories = () => {
     const baseOption = [{ text: "-", value: "-" }];

@@ -27,9 +27,10 @@ export const HistoryDashboard = () => {
   const showFiltersModal = searchParams.get("modal") === "filters";
   const showTransaction = searchParams.get("modal") === "transaction";
 
+  const time = searchParams.get("time") ?? undefined;
   const endDate = searchParams.get("endDate") ?? undefined;
   const startDate = searchParams.get("startDate") ?? undefined;
-  const categoryId = searchParams.get("category") ?? undefined;
+  const categoryId = searchParams.get("categoryId") ?? undefined;
 
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
@@ -120,7 +121,11 @@ export const HistoryDashboard = () => {
         </div>
       </div>
       {!!showFiltersModal && (
-        <HistoryFiltersModal handleClose={() => handleModal(false)} />
+        <HistoryFiltersModal
+          selectedTime={time}
+          selectedCategoryId={categoryId}
+          handleClose={() => handleModal(false)}
+        />
       )}
       {!!showCreateModal && (
         <CreateTransaction
