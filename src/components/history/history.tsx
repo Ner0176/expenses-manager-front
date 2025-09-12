@@ -2,14 +2,22 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateTransaction, TransactionDetails } from "../transaction";
-import { ITransaction, useGetTransactions } from "../../api";
+import {
+  GetTransactionsPayload,
+  ITransaction,
+  useGetTransactions,
+} from "../../api";
 import {
   mdiAlertCircleOutline,
   mdiCurrencyUsd,
   mdiFilterVariant,
   mdiPlus,
 } from "@mdi/js";
-import { ActionIcon, HistoryTransaction } from "./history.content";
+import {
+  ActionIcon,
+  HistoryFiltersModal,
+  HistoryTransaction,
+} from "./history.content";
 import { useTranslation } from "react-i18next";
 import Icon from "@mdi/react";
 
@@ -19,11 +27,13 @@ export const HistoryDashboard = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const showCreateModal = searchParams.get("modal") === "create";
+  const showFiltersModal = searchParams.get("modal") === "filters";
   const showTransaction = searchParams.get("modal") === "transaction";
 
+  const [filters, setFilters] = useState<GetTransactionsPayload>();
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
-  const { data: transactions, refetch } = useGetTransactions();
+  const { data: transactions, refetch } = useGetTransactions(filters);
 
   const handleModal = (isOpen: boolean, path?: string) => {
     isOpen && path
@@ -54,9 +64,9 @@ export const HistoryDashboard = () => {
               onClick={() => handleModal(true, "create")}
             />
             <ActionIcon
-              onClick={() => {}}
               icon={mdiFilterVariant}
               text={t("History.Filters")}
+              onClick={() => handleModal(true, "filters")}
             />
           </div>
         </div>
@@ -103,6 +113,12 @@ export const HistoryDashboard = () => {
           )}
         </div>
       </div>
+      {!!showFiltersModal && (
+        <HistoryFiltersModal
+          setFilters={setFilters}
+          handleClose={() => handleModal(false)}
+        />
+      )}
       {!!showCreateModal && (
         <CreateTransaction
           refetch={refetch}

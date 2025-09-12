@@ -7,6 +7,6 @@ export const CustomSelectContainer = styled.div<{ isDisabled: boolean }>`
 `;
 
 export const StyledSelect = styled.select<{ disabled: boolean }>`
-  ${tw`text-sm bg-white appearance-none focus:outline-none w-full`}
+  ${tw`text-xs bg-white appearance-none focus:outline-none w-full`}
   ${({ disabled }) => !!disabled && tw`bg-neutral-50`}
 `;

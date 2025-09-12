@@ -9,7 +9,9 @@ export interface CreateTransactionPayload {
 }
 
 export interface GetTransactionsPayload {
-  categoryId: number;
+  endDate?: Date;
+  startDate?: Date;
+  categoryId?: number;
 }
 
 export interface ITransaction {

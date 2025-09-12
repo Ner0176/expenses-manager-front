@@ -4,6 +4,7 @@
     "Create": "Crear",
     "Delete": "Eliminar",
     "Cancel": "Cancelar",
+    "FilterBy": "Filtrar por:",
     "SaveChanges": "Guardar cambios"
   },
   "Sidebar": {
@@ -18,7 +19,17 @@
     "AddTx": "Añadir gasto",
     "Currency": "Moneda",
     "Filters": "Filtros",
-    "Empty": "Aún no hay transacciones"
+    "Empty": "Aún no hay transacciones",
+    "TimeFilters": {
+      "Time": "Tiempo",
+      "thisMonth": "Este mes",
+      "last3Months": "Últimos 3 meses",
+      "last6Months": "Últimos 6 meses",
+      "custom": "Personalizado",
+      "startDate": "Fecha inicio",
+      "endDate": "Fecha fin",
+      "InvalidDates": "La fecha de inicio debe ser anterior a la fecha de fin"
+    }
   },
   "Transaction": {
     "Create": {
