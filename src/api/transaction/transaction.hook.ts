@@ -34,13 +34,14 @@ export function useCreateTransaction() {
   });
 }
 
-export function useDeleteTransaction() {
+export function useDeleteTransaction(handleSuccess: () => void) {
   const { t } = useTranslation();
   const basePath = "Transaction.Delete";
 
   return useMutation({
     mutationFn: (id: number) => transactionApi.delete(id),
     onSuccess() {
+      handleSuccess();
       showToast({
         type: "success",
         text: t(`${basePath}.Success`),

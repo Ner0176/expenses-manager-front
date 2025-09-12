@@ -19,7 +19,7 @@ export const HistoryDashboard = () => {
 
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
-  const { data: transactions } = useGetTransactions();
+  const { data: transactions, refetch } = useGetTransactions();
 
   const handleModal = (isOpen: boolean, path?: string) => {
     isOpen && path
@@ -108,6 +108,10 @@ export const HistoryDashboard = () => {
       )}
       {!!showTransaction && !!currentTransaction && (
         <TransactionDetails
+          refetch={() => {
+            refetch();
+            handleModal(false);
+          }}
           transaction={currentTransaction}
           handleClose={() => handleModal(false)}
         />

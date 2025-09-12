@@ -13,6 +13,7 @@ export interface GetTransactionsPayload {
 }
 
 export interface ITransaction {
+  id: number;
   date: Date;
   title: string;
   amount: number;

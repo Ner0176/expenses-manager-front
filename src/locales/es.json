@@ -40,7 +40,9 @@
     "Details": {
       "Title": "Detalle de transacción",
       "Import": "Importe",
-      "Category": "Categoría"
+      "Category": "Categoría",
+      "Date": "Fecha",
+      "Time": "Tiempo"
     },
     "Delete": {
       "Success": "La transacción ha sido eliminada correctamente",
