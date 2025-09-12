@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateTransaction, TransactionDetails } from "../transaction";
-import {
-  GetTransactionsPayload,
-  ITransaction,
-  useGetTransactions,
-} from "../../api";
+import { ITransaction, useGetTransactions } from "../../api";
 import {
   mdiAlertCircleOutline,
   mdiCurrencyUsd,
@@ -26,14 +22,24 @@ export const HistoryDashboard = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
+
   const showCreateModal = searchParams.get("modal") === "create";
   const showFiltersModal = searchParams.get("modal") === "filters";
   const showTransaction = searchParams.get("modal") === "transaction";
 
-  const [filters, setFilters] = useState<GetTransactionsPayload>();
+  const endDate = searchParams.get("endDate") ?? undefined;
+  const startDate = searchParams.get("startDate") ?? undefined;
+  const categoryId = searchParams.get("category") ?? undefined;
+
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
-  const { data: transactions, refetch } = useGetTransactions(filters);
+  const { data: transactions, refetch } = useGetTransactions({
+    categoryId: categoryId ? +categoryId : undefined,
+    startDate: startDate
+      ? parse(startDate, "dd-MM-yyyy", new Date())
+      : undefined,
+    endDate: endDate ? parse(endDate, "dd-MM-yyyy", new Date()) : undefined,
+  });
 
   const handleModal = (isOpen: boolean, path?: string) => {
     isOpen && path
@@ -114,10 +120,7 @@ export const HistoryDashboard = () => {
         </div>
       </div>
       {!!showFiltersModal && (
-        <HistoryFiltersModal
-          setFilters={setFilters}
-          handleClose={() => handleModal(false)}
-        />
+        <HistoryFiltersModal handleClose={() => handleModal(false)} />
       )}
       {!!showCreateModal && (
         <CreateTransaction

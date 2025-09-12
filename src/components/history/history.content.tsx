@@ -1,17 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Icon from "@mdi/react";
 import { getCategoryTitle, ICON_MAP } from "../category";
-import {
-  GetTransactionsPayload,
-  ITransaction,
-  useGetCategories,
-} from "../../api";
+import { ITransaction, useGetCategories } from "../../api";
 import { CustomDatePicker, CustomSelect, Modal, showToast } from "../base";
 import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { TIME_FILTERS } from "./history.interface";
 import { getDatesFromTimeFilter } from "./history.utils";
-import { isAfter } from "date-fns";
+import { format, isAfter } from "date-fns";
+import { useSearchParams } from "react-router-dom";
 
 export const ActionIcon = ({
   icon,
@@ -58,17 +56,16 @@ export const HistoryTransaction = ({
 };
 
 export const HistoryFiltersModal = ({
-  setFilters,
   handleClose,
 }: Readonly<{
   handleClose(): void;
-  setFilters(filters: GetTransactionsPayload): void;
 }>) => {
   const { t } = useTranslation();
+  const [_, setSearchParams] = useSearchParams();
 
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState("-");
   const [endDate, setEndDate] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("-");
   const [startDate, setStartDate] = useState("");
 
   const { data: categories, isLoading } = useGetCategories();
@@ -79,36 +76,57 @@ export const HistoryFiltersModal = ({
     return [
       ...baseOption,
       ...(categories?.map((category) => ({
-        value: category.tag,
+        value: `${category.id}`,
         text: getCategoryTitle(t, category),
       })) ?? []),
     ];
   };
 
   const handleSubmit = () => {
-    let endDateFilter: Date | undefined;
-    let startDateFilter: Date | undefined;
+    let endDateFilter: Date | undefined = !!endDate
+      ? new Date(endDate)
+      : undefined;
+    let startDateFilter: Date | undefined = !!startDate
+      ? new Date(startDate)
+      : undefined;
 
-    if (time !== "custom") {
-      const dates = getDatesFromTimeFilter(time);
-      endDateFilter = dates.endDate;
-      startDateFilter = dates.startDate;
-    } else {
-      if (startDate && endDate && isAfter(startDate, endDate)) {
-        return showToast({
-          type: "error",
-          text: t("History.TimeFilters.InvalidDates"),
-        });
+    if (time !== "-") {
+      if (time !== "custom") {
+        const dates = getDatesFromTimeFilter(time);
+        startDateFilter = dates.startDate;
+        endDateFilter = dates.endDate;
+      } else {
+        if (startDate && endDate && isAfter(startDate, endDate)) {
+          return showToast({
+            type: "error",
+            text: t("History.TimeFilters.InvalidDates"),
+          });
+        }
       }
-
-      endDateFilter = !!endDate ? new Date(endDate) : undefined;
-      startDateFilter = !!startDate ? new Date(startDate) : undefined;
     }
 
-    setFilters({
-      endDate: endDateFilter,
-      startDate: startDateFilter,
-      categoryId: Number(category) || undefined,
+    setSearchParams((sParams) => {
+      if (time === "-") {
+        sParams.delete("time");
+        sParams.delete("endDate");
+        sParams.delete("startDate");
+      } else {
+        sParams.set("time", time);
+        if (!!endDateFilter) {
+          sParams.set("endDate", format(endDateFilter, "dd-MM-yyyy"));
+        }
+        if (!!startDateFilter) {
+          sParams.set("startDate", format(startDateFilter, "dd-MM-yyyy"));
+        }
+      }
+
+      !!category && category !== "-"
+        ? sParams.set("categoryId", category)
+        : sParams.delete("categoryId");
+
+      sParams.delete("modal");
+
+      return sParams;
     });
   };
 
@@ -124,7 +142,7 @@ export const HistoryFiltersModal = ({
           <Skeleton />
         ) : (
           <CustomSelect
-            value={category ?? "-"}
+            value={category}
             options={getCategories()}
             title={t("Category.Title")}
             handleChange={(value) => setCategory(value)}
