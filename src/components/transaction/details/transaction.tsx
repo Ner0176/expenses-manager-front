@@ -55,8 +55,6 @@ export const TransactionDetails = ({
   const [editTransaction, setEditTransaction] = useState(false);
   const [txForm, setTxForm] = useState<CreateTransactionPayload>(transformedTx);
 
-  console.log(txForm);
-
   const handleDeleteSuccess = () => {
     refetch();
     handleClose();
