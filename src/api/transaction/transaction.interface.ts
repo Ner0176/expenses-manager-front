@@ -8,6 +8,14 @@ export interface CreateTransactionPayload {
   description?: string;
 }
 
+export interface EditTransactionPayload {
+  title?: string;
+  amount?: number;
+  currency?: string;
+  categoryId?: number;
+  description?: string;
+}
+
 export interface GetTransactionsPayload {
   endDate?: Date;
   startDate?: Date;

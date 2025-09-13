@@ -6,6 +6,7 @@ export const CustomButton = ({
   text,
   icon,
   onClick,
+  customColor,
   isLoading = false,
   buttonType = "default",
 }: Readonly<{
@@ -13,6 +14,7 @@ export const CustomButton = ({
   icon?: string;
   onClick(): void;
   isLoading?: boolean;
+  customColor?: string;
   buttonType?: "default" | "cancel";
 }>) => {
   return (
@@ -21,6 +23,7 @@ export const CustomButton = ({
       onClick={() => {
         if (!isLoading) onClick();
       }}
+      style={{ backgroundColor: customColor }}
     >
       {isLoading ? (
         <LoadingSpinner />

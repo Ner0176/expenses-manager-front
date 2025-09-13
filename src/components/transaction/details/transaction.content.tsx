@@ -1,5 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { TxContainerHeader } from "./transaction-details.styled";
+import { mdiDeleteOutline, mdiPencilOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { LoadingSpinner } from "../../base";
 
 export const SectionDetails = ({
   type,
@@ -28,5 +31,33 @@ export const TransactionHeader = ({
         <span className="text-neutral-500 text-xs">{description}</span>
       )}
     </TxContainerHeader>
+  );
+};
+
+export const TransactionIcon = ({
+  type,
+  onClick,
+  isLoading,
+}: Readonly<{
+  onClick(): void;
+  isLoading: boolean;
+  type: "edit" | "delete";
+}>) => {
+  return (
+    <div
+      onClick={() => {
+        if (!isLoading) onClick();
+      }}
+    >
+      {isLoading ? (
+        <LoadingSpinner color="gray" />
+      ) : (
+        <Icon
+          className="size-5 cursor-pointer"
+          path={type === "edit" ? mdiPencilOutline : mdiDeleteOutline}
+          style={{ color: type === "edit" ? "#737373" : "#ef4444" }}
+        />
+      )}
+    </div>
   );
 };

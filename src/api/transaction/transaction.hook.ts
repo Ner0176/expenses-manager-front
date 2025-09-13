@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateTransactionPayload,
+  EditTransactionPayload,
   GetTransactionsPayload,
   ITransactionsList,
 } from "./transaction.interface";
@@ -22,6 +23,31 @@ export function useCreateTransaction(handleSuccess: () => void) {
   return useMutation({
     mutationFn: (payload: CreateTransactionPayload) =>
       transactionApi.create(payload),
+    onSuccess() {
+      handleSuccess();
+      showToast({
+        type: "success",
+        text: t(`${basePath}.Success`),
+      });
+    },
+    onError() {
+      showToast({ type: "error", text: t(`${basePath}.Error`) });
+    },
+  });
+}
+
+export function useEditTransaction(handleSuccess: () => void) {
+  const { t } = useTranslation();
+  const basePath = "Transaction.Edit";
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: number;
+      payload: EditTransactionPayload;
+    }) => transactionApi.edit(id, payload),
     onSuccess() {
       handleSuccess();
       showToast({

@@ -50,6 +50,10 @@
       "Success": "La transacción ha sido creada correctamente",
       "Error": "Ha ocurrido un error al intentar crear la transacción"
     },
+    "Edit": {
+      "Success": "La transacción ha sido editada correctamente",
+      "Error": "Ha ocurrido un error al intentar editar la transacción"
+    },
     "Details": {
       "Date": "Fecha",
       "Time": "Hora",
