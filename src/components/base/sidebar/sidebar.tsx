@@ -27,7 +27,7 @@ export const SidebarLayout = ({
   const handleGoBack = () => navigate(location.pathname);
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-gray-500">
+    <div className="h-dvh w-full flex items-center justify-center bg-gray-500">
       <div className="flex flex-col justify-between w-full h-full bg-white">
         <div className="relative flex justify-center w-full border-b border-neutral-200 py-3">
           <span className="text-2xl font-bold">
