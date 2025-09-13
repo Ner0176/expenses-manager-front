@@ -4,3 +4,10 @@ export const CURRENCIES = {
   KRW: "KRW (₩)",
   THB: "Bat tailandés (฿)",
 };
+
+export const CURRENCY_SYMBOLS = {
+  EUR: "€",
+  JPY: "¥",
+  KRW: "₩",
+  THB: "฿",
+};

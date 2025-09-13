@@ -40,8 +40,8 @@
       "From": "De",
       "To": "A",
       "Category": {
-        "Title": "Categoría",
         "Create": {
+          "Title": "Categoría",
           "Button": "Crear nueva"
         }
       },
@@ -51,11 +51,15 @@
       "Error": "Ha ocurrido un error al intentar crear la transacción"
     },
     "Details": {
-      "Title": "Detalle de transacción",
+      "Date": "Fecha",
+      "Time": "Hora",
       "Import": "Importe",
       "Category": "Categoría",
-      "Date": "Fecha",
-      "Time": "Tiempo"
+      "Conversion": "Conversión",
+      "Rate": "Tasa de conversión",
+      "Title": "Detalle de transacción",
+      "Payment": "Detalles del pago",
+      "PreImport": "Importe en {{value}}"
     },
     "Delete": {
       "Success": "La transacción ha sido eliminada correctamente",

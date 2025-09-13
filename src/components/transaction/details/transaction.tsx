@@ -3,9 +3,12 @@ import { ITransaction, useDeleteTransaction } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { getCategoryTitle } from "../../category";
 import { format } from "date-fns";
-import { SectionDetails } from "./transaction.content";
+import { SectionDetails, TransactionHeader } from "./transaction.content";
 import Icon from "@mdi/react";
 import { mdiDeleteOutline } from "@mdi/js";
+import { TransactionContainer } from "./transaction-details.styled";
+import { CURRENCY_SYMBOLS } from "../transaction.interface";
+import { useMemo } from "react";
 
 export const TransactionDetails = ({
   refetch,
@@ -18,7 +21,16 @@ export const TransactionDetails = ({
 }>) => {
   const { t } = useTranslation();
 
-  const { id, title, amount, category, description, date } = transaction;
+  const {
+    id,
+    date,
+    title,
+    amount,
+    category,
+    currency,
+    description,
+    conversionRate,
+  } = transaction;
 
   const handleSuccess = () => {
     refetch();
@@ -27,14 +39,14 @@ export const TransactionDetails = ({
 
   const { mutate: deleteTx, isPending } = useDeleteTransaction(handleSuccess);
 
+  const currencySymbol = useMemo(() => {
+    return CURRENCY_SYMBOLS[currency as keyof typeof CURRENCY_SYMBOLS];
+  }, [currency]);
+
   return (
     <Modal handleClose={handleClose} title={t("Transaction.Details.Title")}>
-      <div className="relative flex flex-col gap-3 border border-neutral-200 rounded-2xl p-4 my-4">
-        <div className="flex flex-col gap-0.5">
-          <span className="text-base font-semibold">{title}</span>
-          <span className="text-neutral-500 text-xs">{description}</span>
-        </div>
-        <SectionDetails type="Import" value={`${amount}€`} />
+      <TransactionContainer>
+        <TransactionHeader title={title} description={description} />
         <SectionDetails type="Category" value={getCategoryTitle(t, category)} />
         <SectionDetails type="Time" value={`${format(date, "HH:mm")}h`} />
         <SectionDetails type="Date" value={format(date, "dd/MM/yyyy")} />
@@ -48,7 +60,24 @@ export const TransactionDetails = ({
             <Icon path={mdiDeleteOutline} className="text-red-500 size-5" />
           )}
         </div>
-      </div>
+      </TransactionContainer>
+      <TransactionContainer>
+        <TransactionHeader title={t("Transaction.Details.Payment")} />
+        <SectionDetails type="Import" value={`${amount} €`} />
+        <SectionDetails type="Conversion" value={`${currency} - ${"EUR"}`} />
+        {!!conversionRate && (
+          <SectionDetails
+            type="PreImport"
+            tVar={currencySymbol}
+            value={`${Number(amount / conversionRate).toFixed(
+              0
+            )} ${currencySymbol}`}
+          />
+        )}
+        {!!conversionRate && (
+          <SectionDetails type="Rate" value={`${conversionRate}`} />
+        )}
+      </TransactionContainer>
     </Modal>
   );
 };

@@ -19,8 +19,10 @@ export interface ITransaction {
   date: Date;
   title: string;
   amount: number;
+  currency: string;
   category: ICategory;
   description: string;
+  conversionRate?: number;
 }
 
 export interface ITransactionsList {

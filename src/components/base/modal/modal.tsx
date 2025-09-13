@@ -43,8 +43,10 @@ export const Modal = ({
               />
               <CustomButton
                 isLoading={isLoading}
-                onClick={handleSubmit}
                 text={t("Generic.SaveChanges")}
+                onClick={() => {
+                  if (!isLoading) handleSubmit();
+                }}
               />
             </div>
           )}
