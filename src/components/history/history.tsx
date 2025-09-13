@@ -55,7 +55,7 @@ export const HistoryDashboard = () => {
         <div className="flex flex-col items-center gap-5">
           <div className="flex flex-col items-center gap-1">
             <span className="font-bold text-3xl">
-              {transactions?.totalGeneral}€
+              {`${transactions?.totalGeneral.toFixed(2)}€`}
             </span>
             <span className="text-sm">{t("History.Total")}</span>
           </div>
@@ -98,7 +98,9 @@ export const HistoryDashboard = () => {
                 >
                   <div className="flex justify-between px-2">
                     <span className="font-bold text-xs">{date}</span>
-                    <span className="text-xs text-neutral-600">{total}€</span>
+                    <span className="text-xs text-neutral-600">{`${total.toFixed(
+                      2
+                    )}€`}</span>
                   </div>
                   <div className="flex flex-col rounded-2xl border border-neutral-200 w-full overflow-hidden">
                     {transactions.map((transaction) => {
