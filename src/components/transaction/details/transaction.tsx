@@ -62,6 +62,7 @@ export const TransactionDetails = ({
 
   const handleEditSucces = () => {
     refetch();
+    handleClose();
     setEditTransaction(false);
   };
 
