@@ -41,7 +41,9 @@ export const TransactionDetails = ({
   } = transaction;
 
   const transformedTx: CreateTransactionPayload = useMemo(() => {
-    const convertedAmount = !!conversionRate ? amount * conversionRate : amount;
+    const convertedAmount = !!conversionRate
+      ? Math.round(amount / conversionRate)
+      : amount;
     return {
       title,
       currency,
@@ -138,8 +140,8 @@ export const TransactionDetails = ({
               <SectionDetails
                 type="PreImport"
                 tVar={currencySymbol}
-                value={`${Number(amount / conversionRate).toFixed(
-                  0
+                value={`${Math.round(
+                  amount / conversionRate
                 )} ${currencySymbol}`}
               />
             )}
