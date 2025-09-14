@@ -16,6 +16,7 @@ import {
 } from "./history.content";
 import { useTranslation } from "react-i18next";
 import Icon from "@mdi/react";
+import Skeleton from "react-loading-skeleton";
 
 export const HistoryDashboard = () => {
   const { t } = useTranslation();
@@ -34,7 +35,11 @@ export const HistoryDashboard = () => {
 
   const [currentTransaction, setCurrentTransaction] = useState<ITransaction>();
 
-  const { data: transactions, refetch } = useGetTransactions({
+  const {
+    refetch,
+    isLoading,
+    data: transactions,
+  } = useGetTransactions({
     categoryId: categoryId ? +categoryId : undefined,
     startDate: startDate
       ? parse(startDate, "dd-MM-yyyy", new Date())
@@ -55,7 +60,11 @@ export const HistoryDashboard = () => {
         <div className="flex flex-col items-center gap-5">
           <div className="flex flex-col items-center gap-1">
             <span className="font-bold text-3xl">
-              {`${transactions?.totalGeneral.toFixed(2)}€`}
+              {isLoading ? (
+                <Skeleton style={{ width: 150, height: 30 }} />
+              ) : (
+                `${transactions?.totalGeneral.toFixed(2) ?? 0}€`
+              )}
             </span>
             <span className="text-sm">{t("History.Total")}</span>
           </div>
