@@ -23,7 +23,8 @@ export const CreateTransaction = ({
     handleClose();
   };
 
-  const { mutate: createTransaction } = useCreateTransaction(handleSuccess);
+  const { mutate: createTransaction, isPending: isCreatingTx } =
+    useCreateTransaction(handleSuccess);
 
   const handleUpdateForm = (fields: Partial<CreateTransactionPayload>) => {
     setTxForm((prev) => ({ ...prev, ...fields }));
@@ -50,6 +51,7 @@ export const CreateTransaction = ({
 
   return (
     <Modal
+      isLoading={isCreatingTx}
       handleClose={handleClose}
       handleSubmit={handleSubmit}
       title={t("Transaction.Create.ModalTitle")}
