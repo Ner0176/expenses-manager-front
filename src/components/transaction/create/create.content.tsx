@@ -32,7 +32,7 @@ export const TransactionForm = ({
       <div className="flex flex-row gap-3 items-center">
         <CustomInput
           type="number"
-          value={amount}
+          value={String(amount)}
           title={t("Transaction.Create.Amount")}
           onChange={(value) => setTxForm({ amount: +value })}
         />
