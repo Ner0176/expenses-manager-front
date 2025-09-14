@@ -1,4 +1,5 @@
 import Icon from "@mdi/react";
+import { useEffect } from "react";
 import { mdiArrowRight } from "@mdi/js";
 import { useTranslation } from "react-i18next";
 import { getCategoryTitle } from "../../category";
@@ -18,6 +19,13 @@ export const TransactionForm = ({
   const { title, amount, currency, description, categoryId } = txForm;
 
   const { data: categories } = useGetCategories();
+
+  useEffect(() => {
+    if (categoryId < 0 && !!categories && !!categories.length) {
+      setTxForm({ categoryId: categories[0].id });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories, categoryId]);
 
   return (
     <div className="flex flex-col gap-3 py-2.5 h-full">
